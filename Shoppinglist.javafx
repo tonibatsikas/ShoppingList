@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ShoppingListApp extends Application {
@@ -71,10 +72,10 @@ public class ShoppingListApp extends Application {
         launch(args);
     }
 
-    static class ShoppingItem {
+    static class ShoppingItem implements Comparable<ShoppingItem> {
         private String name;
 
-        public ShoppingItem(String name) {
+        public ShoppingItem (String name) {
             this.name = name;
         }
 
@@ -90,6 +91,10 @@ public class ShoppingListApp extends Application {
             Button removeButton = new Button("Delete");
             removeButton.setOnAction(e -> removeItem(this));
             return removeButton;
+        }
+        @Override
+        public int compareTo(ShoppingItem otherItem) {
+            return this.name.compareTo(otherItem.getName());
         }
     }
 
