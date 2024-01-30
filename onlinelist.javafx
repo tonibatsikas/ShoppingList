@@ -32,4 +32,35 @@ public class ShoppingListApp extends Application {
                 updateItemList();
                 itemTextField.clear(); // Clear the text field after adding the item
             }
-        
+        });
+
+        itemListContainer = new VBox();
+        itemListContainer.setSpacing(5);
+
+        root.getChildren().addAll(itemTextField, addButton, itemListContainer);
+
+        Scene scene = new Scene(root, 300, 200);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        // Initialisierung der Anzeige der Einkaufsliste
+        updateItemList();
+    }
+
+    private void updateItemList() {
+        itemListContainer.getChildren().clear();
+        for (String item : controller.getShoppingList()) {
+            Label itemLabel = new Label(item);
+            Button removeButton = new Button("Remove");
+            removeButton.setOnAction(e -> {
+                controller.removeItem(item);
+                updateItemList(); // Update the list after removing an item
+            });
+            itemListContainer.getChildren().add(new HBox(itemLabel, removeButton));
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
